@@ -654,3 +654,29 @@ procdump(void)
     printf("\n");
   }
 }
+
+int ps(void)
+{
+ int counter =0;
+ struct proc *p;
+ for(p = proc; p < &proc[NPROC];p++){
+ if(p->state == SLEEPING){
+   printf("%d %d SLEEPING %s %d\n",p->pid, ((p->parent == 0) ? 0 : p->parent->pid), p->name, p->sz);	
+   counter ++;
+   }
+ else if(p->state == RUNNABLE ){
+   printf("%d %d RUNNABLE %s %d\n",p->pid, ((p->parent == 0) ? 0 : p->parent->pid), p->name, p->sz);	
+   counter++; 
+ }
+  else if(p->state ==RUNNING){
+   printf("%d %d RUNNING %s %d\n",p->pid, ((p->parent == 0) ? 0 : p->parent->pid), p->name, p->sz);	
+   counter ++;
+	 }
+  else if(p->state == ZOMBIE ){
+   printf("%d %d ZOMBIE %s %d\n",p->pid, ((p->parent == 0) ? 0 : p->parent->pid), p->name, p->sz);	
+   counter++;
+}
+}
+printf("There are a total of %d processes in the system. " ,counter);
+return 0;
+}
